@@ -61,7 +61,7 @@ app = FastAPI(
     openapi_tags=[
         {"name": "auth", "description": "İşletme kaydı ve JWT ile giriş."},
         {"name": "products", "description": "Ürün CRUD ve fiyatlama (Authorization: Bearer)."},
-        {"name": "predict", "description": "Stok tüketim tahmini (ML)."},
+        {"name": "predict", "description": "Stok tüketim tahmini (kural tabanlı)."},
         {"name": "admin", "description": "Super admin işletme yönetimi."},
     ],
 )
