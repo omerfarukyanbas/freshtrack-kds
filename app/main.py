@@ -24,8 +24,9 @@ from app.database.migrate import (
     ensure_user_role_column,
 )
 from app.core.config import CORS_ALLOW_ORIGINS
-from app.database.session import Base, engine
+from app.database.session import Base, SessionLocal, engine
 import app.models  # noqa: F401 - register SQLAlchemy models on Base.metadata
+from app.services.super_admin_seed import ensure_super_admin
 from app.routes.auth import router as auth_router
 from app.routes.predict import router as predict_router
 from app.routes.products import router as products_router
@@ -46,6 +47,11 @@ async def lifespan(_: FastAPI):
     ensure_user_business_type_column()
     ensure_user_account_status_column()
     ensure_user_role_column()
+    db = SessionLocal()
+    try:
+        ensure_super_admin(db)
+    finally:
+        db.close()
     yield
 
 
