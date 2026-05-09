@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+
+# Database
+*.db
+*.sqlite3
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Env
+.env
+frontend/.env
+
+# OS
+.DS_Store
+Thumbs.db
