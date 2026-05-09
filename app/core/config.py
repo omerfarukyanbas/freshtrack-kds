@@ -60,6 +60,7 @@ class Settings:
         self.access_token_expire_minutes = int(
             os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", str(60 * 24 * 7))
         )
+        self.super_admin_seed_secret = os.getenv("SUPER_ADMIN_SEED_SECRET", "").strip()
 
 
 settings = Settings()

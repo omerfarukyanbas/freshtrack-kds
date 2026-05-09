@@ -1,7 +1,7 @@
 from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.database.session import get_db
@@ -12,11 +12,75 @@ from app.schemas.admin import (
     AdminBusinessDetail,
     AdminBusinessListItem,
     AdminBusinessProductsResponse,
+    AdminDbSummaryProductItem,
+    AdminDbSummaryResponse,
+    AdminDbSummaryUserItem,
     AdminPendingBusinessItem,
 )
 from app.services.product_service import _to_read
 
 router = APIRouter(prefix="/admin", tags=["admin"])
+
+_LATEST_ROWS = 15
+
+
+def _business_status_count(db: Session, account_status: str) -> int:
+    return (
+        db.scalar(
+            select(func.count())
+            .select_from(User)
+            .where(User.role != "super_admin")
+            .where(User.account_status == account_status)
+        )
+        or 0
+    )
+
+
+@router.get("/db-summary", response_model=AdminDbSummaryResponse)
+def db_summary(
+    db: Session = Depends(get_db),
+    _: User = Depends(get_current_super_admin),
+) -> AdminDbSummaryResponse:
+    users_count = db.scalar(select(func.count()).select_from(User)) or 0
+    products_count = db.scalar(select(func.count()).select_from(Product)) or 0
+
+    latest_user_rows = db.scalars(
+        select(User).order_by(User.created_at.desc()).limit(_LATEST_ROWS)
+    ).all()
+    latest_product_rows = db.scalars(
+        select(Product).order_by(Product.created_at.desc()).limit(_LATEST_ROWS)
+    ).all()
+
+    return AdminDbSummaryResponse(
+        users_count=users_count,
+        products_count=products_count,
+        pending_businesses_count=_business_status_count(db, "pending"),
+        approved_businesses_count=_business_status_count(db, "approved"),
+        rejected_businesses_count=_business_status_count(db, "rejected"),
+        latest_users=[
+            AdminDbSummaryUserItem(
+                id=u.id,
+                business_name=u.business_name,
+                owner_name=u.owner_name,
+                email=u.email,
+                role=u.role,
+                account_status=u.account_status,
+                created_at=u.created_at,
+            )
+            for u in latest_user_rows
+        ],
+        latest_products=[
+            AdminDbSummaryProductItem(
+                id=p.id,
+                name=p.name,
+                category=p.category,
+                stock_quantity=p.stock_quantity,
+                expiration_date=p.expiration_date,
+                owner_id=p.user_id,
+            )
+            for p in latest_product_rows
+        ],
+    )
 
 
 @router.get("/pending-businesses", response_model=list[AdminPendingBusinessItem])

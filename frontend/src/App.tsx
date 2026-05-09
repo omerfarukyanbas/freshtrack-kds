@@ -13,6 +13,7 @@ import { AdminPendingBusinessesPage } from "./pages/AdminPendingBusinessesPage";
 import { AdminBusinessDetailPage } from "./pages/AdminBusinessDetailPage";
 import { AdminBusinessProductsPage } from "./pages/AdminBusinessProductsPage";
 import { AdminOverviewPage } from "./pages/AdminOverviewPage";
+import { AdminSystemDataPage } from "./pages/AdminSystemDataPage";
 import { AdminSystemStatsPage } from "./pages/AdminSystemStatsPage";
 import { AlertsPage } from "./pages/AlertsPage";
 import { CriticalPage } from "./pages/CriticalPage";
@@ -72,6 +73,7 @@ export default function App() {
                 <Route path="businesses" element={<AdminBusinessesPage />} />
                 <Route path="businesses/:userId" element={<AdminBusinessDetailPage />} />
                 <Route path="businesses/:userId/products" element={<AdminBusinessProductsPage />} />
+                <Route path="system-data" element={<AdminSystemDataPage />} />
                 <Route path="stats" element={<AdminSystemStatsPage />} />
                 <Route path="*" element={<Navigate to="/admin" replace />} />
               </Route>

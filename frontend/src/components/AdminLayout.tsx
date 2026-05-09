@@ -5,6 +5,7 @@ const adminNav = [
   { to: "/admin", label: "Genel Bakis", icon: "GB", end: true },
   { to: "/admin/pending-businesses", label: "Bekleyen Isletmeler", icon: "BK" },
   { to: "/admin/businesses", label: "Isletmeler", icon: "IS" },
+  { to: "/admin/system-data", label: "Sistem Verileri", icon: "SV" },
   { to: "/admin/stats", label: "Sistem Istatistikleri", icon: "ST" },
 ];
 

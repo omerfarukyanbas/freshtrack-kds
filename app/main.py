@@ -30,6 +30,7 @@ from app.routes.auth import router as auth_router
 from app.routes.predict import router as predict_router
 from app.routes.products import router as products_router
 from app.routes.admin import router as admin_router
+from app.routes.internal_seed import router as internal_seed_router
 
 
 @asynccontextmanager
@@ -81,6 +82,7 @@ app.include_router(auth_router)
 app.include_router(products_router, prefix="/api")
 app.include_router(predict_router)
 app.include_router(admin_router)
+app.include_router(internal_seed_router)
 
 
 @app.get("/health", tags=["meta"])

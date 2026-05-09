@@ -86,3 +86,38 @@ export async function fetchBusinessProducts(userId: number): Promise<AdminBusine
   const res = await fetchWithApiLog(url, { headers: bearerAuthHeaders() });
   return readApiJson<AdminBusinessProductsResponse>(res, url);
 }
+
+export type AdminDbSummaryUserRow = {
+  id: number;
+  business_name: string;
+  owner_name: string;
+  email: string;
+  role: string;
+  account_status: string;
+  created_at: string;
+};
+
+export type AdminDbSummaryProductRow = {
+  id: number;
+  name: string;
+  category: string;
+  stock_quantity: number;
+  expiration_date: string;
+  owner_id: number | null;
+};
+
+export type AdminDbSummary = {
+  users_count: number;
+  products_count: number;
+  pending_businesses_count: number;
+  approved_businesses_count: number;
+  rejected_businesses_count: number;
+  latest_users: AdminDbSummaryUserRow[];
+  latest_products: AdminDbSummaryProductRow[];
+};
+
+export async function fetchDbSummary(): Promise<AdminDbSummary> {
+  const url = `${API_BASE}/admin/db-summary`;
+  const res = await fetchWithApiLog(url, { headers: bearerAuthHeaders() });
+  return readApiJson<AdminDbSummary>(res, url);
+}

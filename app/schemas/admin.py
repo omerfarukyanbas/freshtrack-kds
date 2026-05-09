@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 from pydantic import BaseModel
 
@@ -46,3 +46,32 @@ class AdminBusinessDetail(BaseModel):
 class AdminBusinessProductsResponse(BaseModel):
     user_id: int
     products: list[ProductRead]
+
+
+class AdminDbSummaryUserItem(BaseModel):
+    id: int
+    business_name: str
+    owner_name: str
+    email: str
+    role: str
+    account_status: str
+    created_at: datetime
+
+
+class AdminDbSummaryProductItem(BaseModel):
+    id: int
+    name: str
+    category: str
+    stock_quantity: int
+    expiration_date: date
+    owner_id: int | None
+
+
+class AdminDbSummaryResponse(BaseModel):
+    users_count: int
+    products_count: int
+    pending_businesses_count: int
+    approved_businesses_count: int
+    rejected_businesses_count: int
+    latest_users: list[AdminDbSummaryUserItem]
+    latest_products: list[AdminDbSummaryProductItem]
