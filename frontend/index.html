@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshTrack KDS — Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Doğrudan dosyadan (file://) açılırsa React yüklenmez; uyarı gösterilir. -->
+    <div
+      id="file-open-hint"
+      style="
+        display: none;
+        padding: 1.75rem;
+        font-family: system-ui, sans-serif;
+        max-width: 36rem;
+        margin: 0 auto;
+        line-height: 1.55;
+        color: #1e293b;
+      "
+    >
+      <h1 style="font-size: 1.2rem; margin-top: 0">FreshTrack paneli buradan çalışmaz</h1>
+      <p>
+        Adres çubuğunda <code>file:///</code> görüyorsan sayfa bilgisayarındaki ham
+        <code>index.html</code> dosyasıdır. Vite, <code>/src/main.tsx</code> dosyasını bu
+        yolla sunamaz; bu yüzden ekran boş kalır.
+      </p>
+      <p><strong>Doğru kullanım:</strong></p>
+      <ol style="padding-left: 1.25rem">
+        <li>Node.js kurulu olsun (npm ile birlikte).</li>
+        <li>Terminalde klasöre gir: <code>frontend</code></li>
+        <li>Çalıştır: <code>npm install</code> sonra <code>npm run dev</code></li>
+        <li>Tarayıcıda aç: <strong>http://localhost:5173</strong></li>
+      </ol>
+      <p style="margin-bottom: 0">
+        Üretim için: <code>npm run build</code> ardından <code>npm run preview</code> ile
+        yine bir sunucu adresinden aç.
+      </p>
+    </div>
+    <script>
+      if (location.protocol === "file:") {
+        document.getElementById("file-open-hint").style.display = "block";
+      }
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
